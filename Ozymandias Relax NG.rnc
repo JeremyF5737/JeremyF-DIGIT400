@@ -1,0 +1,14 @@
+start = poem 
+poem = element poem {title, Sentence}
+title = attribute title {"Ozymandias"}
+# the words in blue are called "reserve words" in Relax NG.
+Sentence = element Sentence {n, line+}
+# Repetition indicators:
+# ? zero or one
+# + at least one or more
+# * the most flexible repetition indicator of all: it means
+# zero or more
+n = attribute n {xsd:integer}
+# xsd is a datatype, xsd:integer is a standard datatype for whole
+line = element line {n, mixed{ellipsis*} }
+ellipsis = element ellipsis {empty}

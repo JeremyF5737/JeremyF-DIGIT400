@@ -1,0 +1,27 @@
+start = xml
+xml = element xml {meta,poem}
+# hierarchy for the xml where meta and poem are inside of the xml tag
+meta = element meta {title, author, publication, source}
+title = element title {text}
+author = attribute author {text}
+publication = element publication {title, pubPlace, date}
+# listing elements and attributes under the publication tab
+title2 = element title {type, text}
+type = attribute type {"journal" | "book" | "log"}
+pubPlace = element pubPlace {text}
+date = element date {when, text}
+when = attribute when {"1818-01-11"}
+source = element source {ref, text}
+# listing all elements and attributes under source
+ref = element ref {target}
+target = attribute target {"http://www.bl.uk/learning/timeline/item126940.html"}
+# everything in the meta tag has been assigned an element along with it's attributes
+poem = element poem {1+}
+#listing everything inside of the poem tag
+1 = element 1 {n, mixed { (person | place | fragment | object | MCandW)*}
+place = element place {text}
+person = element person {text}
+fragment = element fragment {text}
+object = element object {text}
+
+

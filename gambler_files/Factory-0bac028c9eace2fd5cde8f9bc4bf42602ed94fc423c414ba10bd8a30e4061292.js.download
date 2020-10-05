@@ -1,0 +1,1 @@
+(function(){Strava.module("Strava.Reports"),Strava.Reports.Factory=function(){function t(){}return t.createSuspiciousMenu=function(t,r){var n;return n=new Strava.Reports.FormSuspiciousAction(t,r)},t.createFakeMenu=function(t,r){var n;return n=new Strava.Reports.FormFakeAction(t,r)},t}()}).call(this);

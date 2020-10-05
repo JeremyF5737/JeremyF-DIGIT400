@@ -1,0 +1,67 @@
+# DIGIT 400 RELAX NG TEST INSTRUCTIONS:  
+# * Save these test files according to our standard file naming conventions for Canvas submissions.
+# * Make the schema well-formed and document with  # comments where you made change(s). 
+# * Then, associate the schema with the XML file we have provided for the exam.
+# * Next, correct the schema code so that it validates the XML (happy green oXygen for both documents) and document briefly with # comments what you changed and why.
+#     **NOTE**: DO NOT CHANGE the markup in the XML file (except for adding your new schema line)! 
+#
+# TIPS: 
+# There are 9 critical errors in this Relax-NG schema that will make oXygen's error-checking box RED. Your goal is to correct each of these errors.
+# (You only see one red box on both files to start because it is the first error that causes the RNG file not to be well-formed. 
+# Fix that first error on your new schema and others will become evident. 
+# When you correct the schema file so it "turns green", associate your new schema with the XML (and remove the original schema line). At that point the other validation errors will become evident in the XML file.)
+# Remember to split your oXygen screen (Window -> Tile Editors Vertically), and use the outline view on the XML document to see where tags sit in the document's hierarchy. (If you don't immediately see this, click on the XML file, then go to  Window -> Show View -> Outline).
+#
+# **NOTE**: Because this is an exam, you are expected to complete this assignment _individually_ 
+# without discussion or help from other students. Any such collaboration will be considered to be plagiarism under the penalties stated on the syllabus.
+# *  GITHUB: While you may ask basic questions on the class GitHub or by email, the instructor's responses will
+# be correspondingly minimal: that is, I will not be telling you the complete answers. Similarly, for any
+# questions about take-home exams on GitHub, students _must not_ reply to each other.
+#
+# SUBMITTING YOUR EXAM:
+# When you are finished, upload BOTH the schema and the XML file to Canvas using the posted upload point for this exam. 
+# You may zip the files to submit them just as you have done for homework assignments.
+
+datatypes xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
+start = xml
+xml = element xml {docInfo, body}
+docInfo = element docInfo {title, subtitle, author, publication, pubDate, copyright}
+# error #4 need to put publication before pubDate. Also need copyright within docInfo
+title = element title {text}
+# error #2 txt is spelled incorrectly (changed to text)
+subtitle = element subtitle {text}
+author = element author {id, text}
+id = attribute id {xsd:ID}
+publication = element publication {type, target, text}
+type = attribute type {"digital" | "person" | "medical" | "legal" | "inverse"}
+# error #3 there is no "print" and place put quotation marks on person
+target = attribute target {xsd:anyURI}
+pubDate = element pubDate {when, empty}
+when = attribute when {xsd:date | xsd:gYear | xsd:gMonthDay} # Hint: For full credit, do not change this to text. The best answer is a datatype.
+# error #5 replacing all these datatypes to xsd:data and xsd:gYear to fix 2018 and the yyrr-mm-dd
+copyright = element copyright {text}
+body = element body {(p | sectionHead)+}
+sectionHead = element sectionHead {text}
+# ? stands for 0 or 1,  while * stands for 0 or more
+# error #6 Separating p elements content based on ? and * based on the xml document
+p = element p {mixed{(quote, duration, persName, orgName, event, date, codeSpec, rs, catchPhrase, docFormat, docGenre, software)?}}
+quote = element quote {source, text}
+source = attribute source {text}
+duration = element duration {quantity, unit, text}
+quantity = attribute quantity {xsd:integer | xsd:decimal}
+unit = attribute unit {"year"}
+# error # in the xml document there is only "year" for the unit
+persName = element persName {ref?, text}
+orgName = element orgName {ref?, text}
+ref = attribute ref {xsd:IDREF}
+event = element event {when?, mixed{(date, codeSpec, software)?}}
+date = element date {when, text}
+codeSpec = element codeSpec {text}
+# replaced codeSpec's contents with text instead of empty
+software = element software {text}
+rs = element rs {type, ref, text}
+catchPhrase = element catchPhrase {type?, text}
+docFormat = element docFormat {text}
+# error 1: replaced () with {}
+docGenre = element docGenre {type, text}
+
